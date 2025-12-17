@@ -78,6 +78,14 @@ cp2_plot = cp2[['Year','Commodity','Value']].dropna()
 chart2 = alt.Chart(cp2_plot).mark_line(point=True).encode(
     x=alt.X('Year:O', title='Year'),
     y=alt.Y('Value:Q', title='Price ($ / bu)'),
+    color=alt.Color('Commodity:N', title='Crop'),
+    tooltip=['Commodity','Year','Value']
+).properties(width=900, height=350).interactive()
+
+st.altair_chart(chart2, use_container_width=True)
+
+### Plot 3: Price received index (1990-2025)
+st.header("Price Received Index (2011=100) — National (1990-2025)")
 
 # Interactive controls for Plot 3
 year_range_3 = st.slider("Select Year Range", 1990, 2025, (1990, 2025), key="plot3_years")
@@ -96,15 +104,7 @@ chart3 = alt.Chart(pi_plot).mark_line(point=True, color='steelblue').encode(
     x=alt.X('Year:O', title='Year'),
     y=alt.Y('Value:Q', title='Price Received Index (2011=100)'),
     tooltip=['Year','Value']
-).properties(width=900, height=300).interactive().str.contains('FOOD COMMODITIES')]
-pi = pi[(pi['Year'] >= 1990) & (pi['Year'] <= 2025)]
-pi_plot = pi[['Year','Value']].dropna()
-
-chart3 = alt.Chart(pi_plot).mark_line(point=True, color='steelblue').encode(
-    x=alt.X('Year:O', title='Year'),
-    y=alt.Y('Value:Q', title='Price Received Index (2011=100)'),
-    tooltip=['Year','Value']
-).properties(width=900, height=300)
+).properties(width=900, height=300).interactive()
 
 st.altair_chart(chart3, use_container_width=True)
 
